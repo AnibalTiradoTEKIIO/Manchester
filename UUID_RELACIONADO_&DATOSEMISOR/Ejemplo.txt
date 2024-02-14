@@ -1,0 +1,21 @@
+<table style="border-collapse: collapse; width: 100%; margin-top: 10px; padding: 0; border: 0px; border-color: #e3e3e3;">
+    <tr>
+        <th colspan="6" style="text-align: center;">Información CFDI</th>
+    </tr>
+    <tr>
+        <td colspan="6" style="border:1px;border-color: #e3e3e3; padding: 8px; text-align: center;">Documentos relacionados:</td>
+    </tr>
+
+    <tr>
+        <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3; ">Folio</td>
+        <td colspan="2" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3; ">Tipo</td>
+        <td colspan="3" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3; ">UUID</td>
+    </tr>
+    <#list cfdi_relacionados as item>
+    <tr>
+        <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${record.custbody_mx_cfdi_folio}</td>
+        <td colspan="2" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${item.type}</td>
+        <td colspan="3" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${item.uuid}</td>
+    </tr>
+    </#list>
+</table>
