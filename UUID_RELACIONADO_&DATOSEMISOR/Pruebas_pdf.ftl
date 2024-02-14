@@ -37,11 +37,11 @@
 
     <#assign currencySymbolMap = {"USD":"$","CAD":"$","EUR":"€","AED":"د.إ.‏","AFN":"؋","ALL":"Lek","AMD":"դր.","ARS":"$","AUD":"$","AZN":"ман.","BAM":"KM","BDT":"৳","BGN":"лв.","BHD":"د.ب.‏","BIF":"FBu","BND":"$","BOB":"Bs","BRL":"R$","BWP":"P","BYR":"BYR","BZD":"$","CDF":"FrCD","CHF":"CHF","CLP":"$","CNY":"CN¥","COP":"$","CRC":"₡","CVE":"CV$","CZK":"Kč","DJF":"Fdj","DKK":"kr","DOP":"RD$","DZD":"د.ج.‏","EEK":"kr","EGP":"ج.م.‏","ERN":"Nfk","ETB":"Br","GBP":"£","GEL":"GEL","GHS":"GH₵","GNF":"FG","GTQ":"Q","HKD":"$","HNL":"L","HRK":"kn","HUF":"Ft","IDR":"Rp","ILS":"₪","INR":"টকা","IQD":"د.ع.‏","IRR":"﷼","ISK":"kr","JMD":"$","JOD":"د.أ.‏","JPY":"￥","KES":"Ksh","KHR":"៛","KMF":"FC","KRW":"₩","KWD":"د.ك.‏","KZT":"тңг.","LBP":"ل.ل.‏","LKR":"SL Re","LTL":"Lt","LVL":"Ls","LYD":"د.ل.‏","MAD":"د.م.‏","MDL":"MDL","MGA":"MGA","MKD":"MKD","MMK":"K","MOP":"MOP$","MUR":"MURs","MXN":"$","MYR":"RM","MZN":"MTn","NAD":"N$","NGN":"₦","NIO":"C$","NOK":"kr","NPR":"नेरू","NZD":"$","OMR":"ر.ع.‏","PAB":"B/.","PEN":"S/.","PHP":"₱","PKR":"₨","PLN":"zł","PYG":"₲","QAR":"ر.ق.‏","RON":"RON","RSD":"дин.","RUB":"руб.","RWF":"FR","SAR":"ر.س.‏","SDG":"SDG","SEK":"kr","SGD":"$","SOS":"Ssh","SYP":"ل.س.‏","THB":"฿","TND":"د.ت.‏","TOP":"T$","TRY":"TL","TTD":"$","TWD":"NT$","TZS":"TSh","UAH":"₴","UGX":"USh","UYU":"$","UZS":"UZS","VEF":"Bs.F.","VND":"₫","XAF":"FCFA","XOF":"CFA","YER":"ر.ي.‏","ZAR":"R","ZMK":"ZK"}>
     <#function fmtc_NS value>
-        <#return currencySymbolMap[currencyCode] + value?string[",##0.00"]>
+        <#return currencySymbolMap[record.currencysymbol] + value?string[",##0.00"]>
     </#function>
 
     <#function fmtc value>
-        <#return currencySymbolMap[currencyCode] + value?number?string[",##0.00"]>
+        <#return currencySymbolMap[currencysymbol] + value?number?string[",##0.00"]>
     </#function>
     </#if>
     <head>
@@ -327,7 +327,7 @@
                                 </td>
                             </tr>  -->
                             <tr>
-                                <td font-size="8pt"><b >Razón social:</b> ${companyInformation.legalname}</td>
+                                <td font-size="8pt"><b >Razón social:</b> ${record.subsidiary.legalname}</td>
                             </tr>
                             <tr>
                                 <td font-size="8pt"><b >RFC:</b> ${record.subsidiary.taxregistrationnumber}</td>
@@ -914,7 +914,7 @@
                         <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3; ">Importe pagado</td>
                         <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3; ">Importe de saldo Insoluto</td>
                     </tr>
-                    <#if custom.appliedTxns?has_content>
+                    <#--  <#if custom.appliedTxns?has_content>
                         <#list custom.appliedTxns as appliedTxn>
                         <#list record.item as item>
                         <#assign "txnitem" = record.apply[appliedTxn.line?number]>
@@ -923,26 +923,31 @@
                             <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.Serie}</td>
                             <td colspan="3" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.IdDocumento}</td>
                             <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.NumParcialidad}</td>
-                            <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.ImpSaldoAnt}</td>
-                            <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.ImpPagado}</td>
-                            <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.ImpSaldoInsoluto}</td>
+                            <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.ImpSaldoAnt?number?string[",##0.00"]}</td>
+                            <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.ImpPagado?number?string[",##0.00"]}</td>
+                            <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.ImpSaldoInsoluto?number?string[",##0.00"]}</td>
                         </tr>
                         </#list>
                         </#list>
-                        </#list> 
-                    <#else> 
+                        </#list>   -->
+                    <#--  <#else>   -->
                         <#list dataXML.Complemento.Pagos.Pago.DoctoRelacionado as doctoRelacionado> 
                         <#assign record2 = record.load('invoice', 178114)> 
                         <tr>
+                            <#assign currencysymbol = {"USD":"$","EUR":"€","MXN":"$"}>
+                            <#assign  ImpSaldoAnt = doctoRelacionado.atributos.ImpSaldoAnt?number>
+                            <#assign  ImpSaldoInsoluto = doctoRelacionado.atributos.ImpSaldoInsoluto?number>
+                            <#assign  ImpPagado = doctoRelacionado.atributos.ImpPagado?number>
                             <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.Serie}</td>
                             <td colspan="3" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.IdDocumento}</td>
                             <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.NumParcialidad}</td>
-                            <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.ImpSaldoAnt}</td>
-                            <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.ImpPagado}</td>
-                            <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.ImpSaldoInsoluto}</td>
+                            <#--  <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.ImpSaldoAnt?number?string[",##0.00"]}</td>  -->
+                            <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${fmtc_NS(ImpSaldoAnt)}</td>
+                            <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${fmtc_NS(ImpPagado)}</td>
+                            <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${fmtc_NS(ImpSaldoInsoluto)}</td>
                         </tr>
                         </#list>
-                    </#if>
+                    <#--  </#if>  -->
                     
         </table>
 
