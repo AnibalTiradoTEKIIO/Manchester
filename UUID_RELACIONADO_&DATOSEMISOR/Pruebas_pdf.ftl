@@ -898,6 +898,7 @@
                 </td>
             </tr>
         </table>
+        <#--  ESTE ES EL QUE FUNCIONA  -->
         <table style="border-collapse: collapse; width: 100%; margin-top: 10px; padding: 0; border: 0px; border-color: #e3e3e3;">
                     <tr>
                         <th colspan="8" style="text-align: center;">Información CFDI</th>
@@ -932,16 +933,13 @@
                         </#list>   -->
                     <#--  <#else>   -->
                         <#list dataXML.Complemento.Pagos.Pago.DoctoRelacionado as doctoRelacionado> 
-                        <#assign record2 = record.load('invoice', 178114)> 
                         <tr>
-                            <#assign currencysymbol = {"USD":"$","EUR":"€","MXN":"$"}>
                             <#assign  ImpSaldoAnt = doctoRelacionado.atributos.ImpSaldoAnt?number>
                             <#assign  ImpSaldoInsoluto = doctoRelacionado.atributos.ImpSaldoInsoluto?number>
                             <#assign  ImpPagado = doctoRelacionado.atributos.ImpPagado?number>
                             <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.Serie}</td>
                             <td colspan="3" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.IdDocumento}</td>
                             <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.NumParcialidad}</td>
-                            <#--  <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${doctoRelacionado.atributos.ImpSaldoAnt?number?string[",##0.00"]}</td>  -->
                             <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${fmtc_NS(ImpSaldoAnt)}</td>
                             <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${fmtc_NS(ImpPagado)}</td>
                             <td colspan="1" style=" border: 1px ; padding: 8px; text-align: left;border-color: #e3e3e3;">${fmtc_NS(ImpSaldoInsoluto)}</td>
